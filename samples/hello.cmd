@@ -1,0 +1,1 @@
+mongo --quiet hello.js

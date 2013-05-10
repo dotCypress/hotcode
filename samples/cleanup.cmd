@@ -1,0 +1,1 @@
+mongo --quiet cleanup.js
