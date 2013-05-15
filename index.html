@@ -61,50 +61,88 @@
         <li>
           Scripting
           <ul>
-            <li>--shell --eval</li>
+            <li>Command line</li>
             <li>system.js</li>
             <li>~/.mongorc.js</li>
+            <li>Map-Reduce vs Aggregation Framework</li>
           </ul>
         </li>
-        <li>
-          Practice
-          <ul>
-            <li>Mr. Proper</li>
-            <li>Reports</li>
-          </ul>
-        </li>
+        <li>Practice</li>
       </ol>
     </div>
   </section>
   <section class="slide">
     <div>
       <h2>Mongo basics</h2>
+      <ul>
+        <li>Document-oriented DBMS</li>
+        <li>Collections</li>
+        <li>Documents</li>
+        <li>BSON</li>
+        <li>Dynamic schemas</li>
+      </ul>
     </div>
   </section>
   <section class="slide">
     <div>
-      <h2>Mongo shell</h2>
-      <p>
-        DBQuery.prototype._prettyShell = true;
-      </p>
+      <h2>Mongo basics</h2>
+      <ul>
+        <li>Indexes</li>
+        <li>GridFS</li>
+        <li>Transactions</li>
+        <li>Concurrency</li>
+        <li>Sharding & Replication</li>
+      </ul>
+    </div>
+  </section>
+  <section class="slide">
+    <div>
+      <h2>Command line</h2>
+      <pre><code><mark class="important">mongo[.exe]</mark></code></pre>
+      <pre><code><mark>--eval</mark>
+<mark>--shell</mark>
+<mark>--quiet</mark>
+      </code></pre>
+    </div>
+  </section>
+  <section class="slide">
+    <div>
+      <img src="pictures/stark.jpeg" alt="">
     </div>
   </section>
   <section class="slide">
     <div>
       <h2>Scripting</h2>
-      <h3>--shell</h3>
+      <pre><code>print('Hello hotcode!\n');
+print('Databases:');
+function printName(name){
+  print('Database: ' + name);
+}
+db.getMongo().getDBNames().forEach(printName);
+</code>
+     </pre>
     </div>
   </section>
   <section class="slide">
     <div>
       <h2>Scripting</h2>
-      <h3>--eval</h3>
+      <pre><code><mark class="important">system.js</mark></code></pre>
+      <pre><code>db.<mark>system.js</mark>.save(
+  {
+    _id: "myCoolFunction",
+    value: function (x, y){ return x + y; }
+  });</code></pre>
     </div>
   </section>
   <section class="slide">
     <div>
       <h2>Scripting</h2>
-      <h3>system.js</h3>
+      <pre><code><mark class="important">system.js</mark></code></pre>
+      <pre><code>db.<mark>eval</mark>("myCoolFunction(12, 5)")
+
+db.<mark>loadServerScripts()</mark>;
+myCoolFunction(12, 5);
+      </code></pre>
     </div>
   </section>
   <section class="slide">
@@ -116,9 +154,67 @@
         <li><a href="https://github.com/daniyalzade/mongorc">daniyalzade/mongorc</a></li>
       </ul>
     </div>
-  </section><section class="slide shout">
+  </section>
+   <section class="slide">
     <div>
-      <h2>Вопросы</h2>
+      <h2>Map-Reduce vs Aggregation Framework</h2>
+       <ul>
+        <li>Map-Reduce</li>
+        <li>Aggregation Framework</li>
+      </ul>
+    </div>
+  </section>
+  <section class="slide">
+    <div>
+      <h2>Practice</h2>
+      <pre>
+        <code><mark>mongo --quiet</mark> <mark class="important">hello.js</mark></code>
+
+        <code><mark>mongo --quiet</mark> <mark class="important">cleanup.js</mark></code>
+
+        <code><mark>mongo --quiet</mark> <mark class="important">report.js > test.csv</mark></code>
+      </pre>
+    </div>
+  </section>
+  <section class="slide">
+    <div>
+     <h2>Practice</h2>
+     <pre><code>var hotcode = new Mongo().getDB('hotcode');
+var albumImages = hotcode.albums.find().toArray().
+  reduce(function(a, b) {
+    return a.concat(b.images);
+  }, []);
+var selector = { _id: { $not: { $in: albumImages }}};
+hotcode.images.remove(selector);</code></pre>
+    <div>
+  </section>
+  <section class="slide">
+    <div>
+      <img src="pictures/stark.jpeg" alt="">
+    </div>
+  </section>
+  <section class="slide">
+    <div>
+     <h2>Practice</h2>
+     <pre><code>var hotcode = new Mongo().getDB('hotcode');
+var data = hotcode.albums.find().toArray().
+  reduce(function(a, b) {
+    a.push([b._id, b.images.length]);
+    return a; }, []);
+print("Album,Photos");
+data.forEach(function(infoArray){
+   print(infoArray.join(","));
+});</code></pre>
+    <div>
+  </section>
+   <section class="slide">
+    <div>
+      <img src="pictures/stark.jpeg" alt="">
+    </div>
+  </section>
+  <section class="slide shout">
+    <div>
+      <h2>Any questions?</h2>
     </div>
   </section>
   <p class="badge"><a href="https://github.com/dotCypress/hotcode">Fork me on Github</a></p>
