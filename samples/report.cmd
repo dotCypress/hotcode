@@ -1,1 +1,1 @@
-mongo --quiet report.js > test.csv
+c:\mongo\mongo.exe --quiet report.js > test.csv

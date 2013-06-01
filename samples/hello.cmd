@@ -1,1 +1,1 @@
-mongo --quiet hello.js
+c:\mongo\mongo.exe --quiet hello.js
